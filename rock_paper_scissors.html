@@ -1,14 +1,37 @@
 <head>
-  <title>rock_paper_scissors</title>
+  <title>Rock, Paper, Scissors!</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-
-  {{> hello}}
 </body>
 
 <template name="hello">
   <button>Click Me</button>
   <p>You've pressed the button {{counter}} times.</p>
+</template>
+
+<template name="Home">
+  {{> Nav}}
+</template>
+
+<template name="player1">
+  <h1>Player 1</h1>
+</template>
+
+<template name="player2">
+  <h1>Player 2</h1>
+</template>
+
+<template name="Nav">
+  <ul>
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <a href="/player1">Player1</a>
+    </li>
+    <li>
+      <a href="/player2">Player2</a>
+    </li>
+  </ul>
 </template>
