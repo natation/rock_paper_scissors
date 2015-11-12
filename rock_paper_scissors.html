@@ -2,23 +2,19 @@
   <title>Rock, Paper, Scissors!</title>
 </head>
 
-<body>
-</body>
-
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
-</template>
+<body></body>
 
 <template name="Home">
-  {{> Nav}}
+  {{> Nav home=true}}
 </template>
 
 <template name="player1">
+  {{> Nav}}
   <h1>Player 1</h1>
 </template>
 
 <template name="player2">
+  {{> Nav}}
   <h1>Player 2</h1>
 </template>
 
@@ -27,11 +23,13 @@
     <li>
       <a href="/">Home</a>
     </li>
+    {{#if home}}
     <li>
       <a href="/player1">Player1</a>
     </li>
     <li>
       <a href="/player2">Player2</a>
     </li>
+    {{/if}}
   </ul>
 </template>
