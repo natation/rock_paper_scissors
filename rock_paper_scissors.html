@@ -5,17 +5,22 @@
 <body></body>
 
 <template name="Home">
-  {{> Nav home=true}}
+
 </template>
 
 <template name="player1">
-  {{> Nav}}
   <h1>Player 1</h1>
 </template>
 
 <template name="player2">
-  {{> Nav}}
   <h1>Player 2</h1>
+</template>
+
+<template name="ApplicationLayout">
+  {{> Nav fullNav=fullNav}}
+  <div class="container">
+    {{> yield}}
+  </div>
 </template>
 
 <template name="Nav">
@@ -23,7 +28,7 @@
     <li>
       <a href="/">Home</a>
     </li>
-    {{#if home}}
+    {{#if fullNav}}
     <li>
       <a href="/player1">Player1</a>
     </li>
