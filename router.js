@@ -1,5 +1,3 @@
-Iron.utils.debug = true;
-
 Router.route('/', function () {
   layoutOptions = {fullNav: true};
   setLayout.call(this, layoutOptions);
@@ -9,13 +7,21 @@ Router.route('/', function () {
 Router.route('/player1', function () {
   layoutOptions = {fullNav: false};
   setLayout.call(this, layoutOptions);
-  this.render('player1');
+  this.render('player', {
+    data: {
+      playerNum: 1
+    }
+  });
 });
 
 Router.route('/player2', function () {
   layoutOptions = {fullNav: false};
   setLayout.call(this, layoutOptions);
-  this.render('player2');
+  this.render('player', {
+    data: {
+      playerNum: 2
+    }
+  });
 });
 
 function setLayout (opts) {
