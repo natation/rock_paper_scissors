@@ -8,8 +8,11 @@
   <h1>Welcome to Rock, Paper, Scissors</h1>
 </template>
 
-<template name="player">
+<template name="Player">
   <h1>Player {{playerNum}}</h1>
+  {{#each player}}
+    <h1>Wins: {{wins}} Losses: {{losses}} Ties: {{ties}}</h1>
+  {{/each}}
 </template>
 
 <template name="ApplicationLayout">

@@ -7,7 +7,7 @@ Router.route('/', function () {
 Router.route('/player1', function () {
   layoutOptions = {fullNav: false};
   setLayout.call(this, layoutOptions);
-  this.render('player', {
+  this.render('Player', {
     data: {
       playerNum: 1
     }
@@ -17,7 +17,7 @@ Router.route('/player1', function () {
 Router.route('/player2', function () {
   layoutOptions = {fullNav: false};
   setLayout.call(this, layoutOptions);
-  this.render('player', {
+  this.render('Player', {
     data: {
       playerNum: 2
     }
