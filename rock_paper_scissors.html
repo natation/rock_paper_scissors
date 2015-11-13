@@ -11,19 +11,46 @@
 <template name="Player">
   <h1>Player {{playerNum}}</h1>
   {{#each player}}
-    <h1>Wins: {{wins}} Losses: {{losses}} Ties: {{ties}}</h1>
+    <h2>Wins: {{wins}} Losses: {{losses}} Ties: {{ties}}</h2>
   {{/each}}
+  <h2>Your choice:</h2>
+  {{> Choices ready=bothDone playerNum=playerNum}}
+  <h2>Opponent's choice:</h2>
+  {{> OpponentChoice ready=bothDone playerNum=playerNum}}
+  <h2>Outcome:</h2>
+  {{> Outcome ready=bothDone}}
 </template>
 
+<template name="Choices">
+  <button type="button"
+          class="choice btn {{#if rock}}btn-success{{/if}}"
+          disabled={{disabled}}>Rock</button>
+  <button type="button"
+          class="choice btn {{#if paper}}btn-success{{/if}}"
+          disabled={{disabled}}>Paper</button>
+  <button type="button"
+          class="choice btn {{#if scissors}}btn-success{{/if}}"
+          disabled={{disabled}}>Scissors</button>
+</template>
+
+<template name="OpponentChoice">
+  <button class="opponent-choice">{{opponentChoice}}</button>
+</template>
+
+<template name="Outcome">
+  <button class="outcome">{{outcome}}</button>
+</template>
+
+
 <template name="ApplicationLayout">
-  {{> Nav fullNav=fullNav}}
   <div class="container">
+  {{> Nav fullNav=fullNav}}
     {{> yield}}
   </div>
 </template>
 
 <template name="Nav">
-  <ul>
+  <ul class="nav nav-pills navbar-inverse">
     <li>
       <a href="/">Home</a>
     </li>
