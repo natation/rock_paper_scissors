@@ -3,20 +3,25 @@ Players = new Mongo.Collection("players");
 if (Meteor.isServer) {
   Meteor.startup(function () {
     if (Players.find().count() === 0) {
-      [1, 2].forEach(function (num) {
         Players.insert({
-          num: num,
+          num: 1,
           wins: 0,
           losses: 0,
           ties: 0,
           choice: ""
         });
-      });
+        Players.insert({
+          num: 2,
+          wins: 0,
+          losses: 0,
+          ties: 0,
+          choice: ""
+        });
     }
   });
 
   Meteor.publish("players", function () {
-    return Tasks.find();
+    return Players.find();
   });
 }
 
@@ -61,7 +66,6 @@ if (Meteor.isClient) {
       e.preventDefault();
       var choice = e.target.textContent,
           player = Players.findOne({num: this.playerNum});
-      // Players.update(player._id, {$set: {choice: choice}});
       Meteor.call("updateChoice", player._id, choice);
     }
   });
@@ -85,25 +89,21 @@ if (Meteor.isClient) {
         var winner = determineWinner();
         setTimeout(function (winner) {
           Players.find({}).forEach(function (player) {
-            // Players.update(player._id, {$set: {choice: ""}});
             Meteor.call("updateChoice", player._id, "");
             if (winner) {
               if (player.num === winner)
                 Meteor.call("updateScore", player, "win");
-                // Players.update(player._id, {$set: {wins: player.wins + 1}});
               else {
                 Meteor.call("updateScore", player, "loss");
-                // Players.update(player._id, {$set: {losses: player.losses + 1}});
               }
             } else {
                 Meteor.call("updateScore", player, "tie");
-              // Players.update(player._id, {$set: {ties: player.ties + 1}});
             }
           });
         }, 2000, winner);
         if (winner) {
           return "Player " + winner + " wins!";
-        } else {
+        } else if (typeof winner !== "undefined") {
           return "It's a tie!";
         }
       } else {
@@ -114,7 +114,7 @@ if (Meteor.isClient) {
 }
 
 function determineWinner () {
-  var winner = false,
+  var winner,
       choices = {};
   Players.find({}).forEach(function (player) {
     choices[player.num] = player.choice;
@@ -133,6 +133,8 @@ function determineWinner () {
         winner = p2Choice === "Rock" ? 2 : 1;
         break;
     }
+  } else if (p1Choice === p2Choice) {
+    winner = false;
   }
   return winner;
 }
@@ -149,7 +151,7 @@ Meteor.methods({
       case "loss":
         Players.update(player._id, {$set: {losses: player.losses + 1}});
         break;
-      default:
+      case "tie":
         Players.update(player._id, {$set: {ties: player.ties + 1}});
     }
   }
