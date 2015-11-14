@@ -33,12 +33,16 @@ if (Meteor.isClient) {
       return Players.find({num: this.playerNum});
     },
     bothDone: function () {
-      var bothDone = true;
-      Players.find({}).forEach(function (player) {
-        if (!player.choice) {
-          bothDone = false;
-        }
-      });
+      var bothDone,
+          players = Players.find();
+      if (players.count() > 0) {
+        bothDone = true;
+        Players.find({}).forEach(function (player) {
+          if (!player.choice) {
+            bothDone = false;
+          }
+        });
+      }
       return bothDone;
     }
   });
@@ -89,18 +93,20 @@ if (Meteor.isClient) {
         var winner = determineWinner();
         setTimeout(function (winner) {
           Players.find({}).forEach(function (player) {
-            Meteor.call("updateChoice", player._id, "");
-            if (winner) {
-              if (player.num === winner)
-                Meteor.call("updateScore", player, "win");
-              else {
-                Meteor.call("updateScore", player, "loss");
+            if (player.choice) {
+              Meteor.call("updateChoice", player._id, "");
+              if (winner) {
+                if (player.num === winner)
+                  Meteor.call("updateScore", player, "win");
+                else {
+                  Meteor.call("updateScore", player, "loss");
+                }
+              } else {
+                  Meteor.call("updateScore", player, "tie");
               }
-            } else {
-                Meteor.call("updateScore", player, "tie");
             }
           });
-        }, 2000, winner);
+        }, 3000, winner);
         if (winner) {
           return "Player " + winner + " wins!";
         } else if (typeof winner !== "undefined") {
